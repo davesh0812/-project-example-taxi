@@ -21,12 +21,12 @@ def pipeline(dataset: str, project_name: str):
         function="trainer",
         name="trainer",
         inputs={"train_set": prepare_dataset_run.outputs["train_dataset"]},
-        hyperparams={
-            "boosting_type": ["gbdt"],
-            "subsample": [0.2, 0.5, 0.8],
-            "min_split_gain": [0.2, 0.5, 0.7],
-            "min_child_samples": [5, 10, 15],
-        },
+        # hyperparams={
+        #     "boosting_type": ["gbdt"],
+        #     "subsample": [0.2, 0.5, 0.8],
+        #     "min_split_gain": [0.2, 0.5, 0.7],
+        #     "min_child_samples": [5, 10, 15],
+        # },
         selector="min.mean_squared_error",
         outputs=["model"],
         auto_build=True,
