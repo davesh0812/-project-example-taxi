@@ -54,8 +54,8 @@ def pipeline(
     )
     # Define tracking policy
     tracking_policy = {
-        'stream_image': "quay.io / mlrun / mlrun - api: 1.3.0 - rc23",
-        'default_batch_image': "quay.io / mlrun / mlrun - api: 1.3.0 - rc23",
+        'stream_image': "quay.io/mlrun/mlrun-api:1.3.0-rc23",
+        'default_batch_image': "quay.io/mlrun/mlrun-api:1.3.0-rc23",
     }
 
     # Enable model monitoring
