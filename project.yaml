@@ -1,7 +1,7 @@
 kind: project
 metadata:
   name: ny-taxi-new-demo
-  created: ‘2023-02-16T12:56:11.734000’
+  created: '2023-02-16T12:56:11.734000'
 spec:
   functions:
   - name: data-prep
@@ -27,14 +27,14 @@ spec:
         project: ny-taxi-new-demo
         categories: []
       spec:
-        command: ‘’
+        command: ''
         args: []
         image: mlrun/ml-models
         build:
           source: ./
           commands: []
           code_origin: git://github.com/davesh0812/nyc-taxi-demo#refs/heads/main#5dd775323e5ad7dc14af253813d384c73b5264de
-        description: ‘’
+        description: ''
         disable_auto_mount: false
         env: []
         resources:
@@ -43,12 +43,12 @@ spec:
             cpu: 25m
           limits:
             memory: 20Gi
-            cpu: ‘2’
+            cpu: '2'
         priority_class_name: igz-workload-medium
         preemption_mode: prevent
         min_replicas: 1
         max_replicas: 4
-        source: ‘’
+        source: ''
         function_kind: serving_v2
         base_image_pull: false
         graph:
@@ -130,6 +130,112 @@ spec:
     image: mlrun/ml-models
     handler: src.serving_test.model_server_tester
     with_repo: true
+  - name: serving-v2
+    spec:
+      kind: serving
+      metadata:
+        name: serving-v2
+        project: ny-taxi-eyal-v1
+        categories: []
+      spec:
+        command: ''
+        args: []
+        image: mlrun/ml-models
+        build:
+          source: ./
+          commands: []
+          code_origin: git://github.com/davesh0812/nyc-taxi-demo#refs/heads/main#5dd775323e5ad7dc14af253813d384c73b5264de
+        description: ''
+        disable_auto_mount: false
+        env: []
+        resources:
+          requests:
+            memory: 1Mi
+            cpu: 25m
+          limits:
+            memory: 20Gi
+            cpu: '2'
+        priority_class_name: igz-workload-medium
+        preemption_mode: prevent
+        min_replicas: 1
+        max_replicas: 4
+        source: ''
+        function_kind: serving_v2
+        base_image_pull: false
+        graph:
+          steps:
+            calculate_airport_distance:
+              kind: task
+              handler: src.data_prep.add_airport_dist
+              after: []
+            calculate_radian_conv:
+              kind: task
+              handler: src.data_prep.radian_conv_step
+              after:
+              - calculate_airport_distance
+            bearing_calculation:
+              kind: task
+              handler: src.data_prep.sphere_dist_bear_step
+              after:
+              - calculate_radian_conv
+            distance_calculation:
+              kind: task
+              handler: src.data_prep.sphere_dist_step
+              after:
+              - bearing_calculation
+            DateExtractor:
+              kind: task
+              class_name: mlrun.feature_store.steps.DateExtractor
+              class_args:
+                parts:
+                - hour
+                - day
+                - month
+                - day_of_week
+                - year
+                timestamp_col: pickup_datetime
+              after:
+              - distance_calculation
+            preprocess:
+              kind: task
+              handler: src.serving.preprocess
+              after:
+              - DateExtractor
+            predict_fare:
+              kind: task
+              class_name: mlrun.frameworks.lgbm.LGBMModelServer
+              class_args:
+                model_path: store://models/ny-taxi-eyal-v1/lgbm_ny_taxi#0:25ad46d24b8c49d082e37028027577a4
+              after:
+              - preprocess
+            postprocess:
+              kind: task
+              handler: src.serving.postprocess
+              after:
+              - predict_fare
+              responder: true
+          engine: async
+        secret_sources: []
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: app.iguazio.com/lifecycle
+                  operator: NotIn
+                  values:
+                  - preemptible
+                - key: eks.amazonaws.com/capacityType
+                  operator: NotIn
+                  values:
+                  - SPOT
+                - key: node-lifecycle
+                  operator: NotIn
+                  values:
+                  - spot
+        tolerations: null
+        security_context: {}
+      verbose: false
   workflows:
   - path: src/train_workflow.py
     name: train_workflow
@@ -141,9 +247,3 @@ spec:
   owner: eyald
 status:
   state: online
-
-
-
-
-
-
