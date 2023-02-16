@@ -1,7 +1,7 @@
 kind: project
 metadata:
-  name: ny-taxi-demo-new
-  created: '2023-02-16T14:22:03.980000'
+  name: ny-taxi-demo-1
+  created: '2023-02-16T15:06:21.174000'
 spec:
   functions:
   - name: data-prep
@@ -24,7 +24,7 @@ spec:
       kind: serving
       metadata:
         name: serving
-        project: ny-taxi-demo-davids
+        project: ny-taxi-demo-1
         categories: []
       spec:
         command: ''
@@ -33,7 +33,7 @@ spec:
         build:
           source: ./
           commands: []
-          code_origin: git://github.com/davesh0812/nyc-taxi-demo.git#refs/heads/main
+          code_origin: git://github.com/davesh0812/nyc-taxi-demo.git#refs/heads/main#f21c030122144c4de8588718bbb435434eadbf67
         description: ''
         disable_auto_mount: false
         env: []
@@ -94,7 +94,7 @@ spec:
               kind: task
               class_name: mlrun.frameworks.lgbm.LGBMModelServer
               class_args:
-                model_path: store://models/ny-taxi-demo-davids/lgbm_ny_taxi#0:ccb3185f5c34407f8d86f9e6a21f1d2c
+                model_path: ''
               after:
               - preprocess
             postprocess:
