@@ -1,6 +1,6 @@
 kind: project
 metadata:
-  name: ny-taxi-demo-davids
+  name: ny-taxi-demo-test
   created: '2023-02-15T15:16:46.028000'
 spec:
   functions:
@@ -24,7 +24,7 @@ spec:
       kind: serving
       metadata:
         name: serving
-        project: ny-taxi-demo-davids
+        project: ny-taxi-demo-test
         categories: []
       spec:
         command: ''
