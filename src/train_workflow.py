@@ -52,14 +52,8 @@ def pipeline(
     serving_function.spec.graph["predict_fare"].class_args["model_path"] = str(
         training_run.outputs["model"]
     )
-    # Define tracking policy
-    tracking_policy = {
-        'stream_image': "quay.io/mlrun/mlrun-api:1.3.0-rc23",
-        'default_batch_image': "quay.io/mlrun/mlrun-api:1.3.0-rc23",
-    }
-
     # Enable model monitoring
-    serving_function.set_tracking(tracking_policy=tracking_policy)
+    serving_function.set_tracking()
 
     # Deploy the serving function:
     deploy_return = project.deploy_function("serving").after(training_run)
