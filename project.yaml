@@ -1,6 +1,6 @@
 kind: project
 metadata:
-  name: demo-nytaxi-davids
+  name: ny-lgbm-demo
   created: '2023-02-16T15:06:21.174000'
 spec:
   functions:
@@ -24,7 +24,7 @@ spec:
       kind: serving
       metadata:
         name: serving
-        project: demo-nytaxi-davids
+        project: ny-lgbm-demo
         categories: []
       spec:
         command: ''

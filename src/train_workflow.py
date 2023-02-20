@@ -60,8 +60,6 @@ def pipeline(
     serving_function.spec.build.image = image
     serving_function.spec.image = image
 
-    serving_function.set_tracking()
-
     # Deploy the serving function:
     deploy_return = project.deploy_function("serving").after(training_run)
 
