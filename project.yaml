@@ -140,6 +140,5 @@ spec:
   origin_url: git://github.com/davesh0812/nyc-taxi-demo.git#refs/heads/main
   load_source_on_run: true
   desired_state: online
-  owner: davids
 status:
   state: online
