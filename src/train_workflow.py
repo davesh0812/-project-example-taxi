@@ -53,12 +53,7 @@ def pipeline(
         training_run.outputs["model"]
     )
     # Enable model monitoring
-    image = "quay.io/eyaligu/mlrun-api:nyc-demo"
-    tracking_policy = {'default_batch_intervals': "0 */2 * * *", 'stream_image': image, 'default_batch_image': image}
-    serving_function.set_tracking(tracking_policy=tracking_policy)
-
-    serving_function.spec.build.image = image
-    serving_function.spec.image = image
+    serving_function.set_tracking()
 
     # Deploy the serving function:
     deploy_return = project.deploy_function("serving").after(training_run)
