@@ -2,7 +2,6 @@ from random import  uniform
 from time import sleep
 import mlrun
 
-
 def invoke(sample_cnt=1000, project_name="ny-lgbm-demo-yaronh"):
 
     # Load serving function
