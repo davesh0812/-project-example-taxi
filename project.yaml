@@ -1,6 +1,6 @@
 kind: project
 metadata:
-  name: ny-demo-lgbm-model
+  name: ny-demo-lgbm-model-1
   created: '2023-02-16T15:06:21.174000'
 spec:
   functions:
@@ -24,7 +24,7 @@ spec:
       kind: serving
       metadata:
         name: serving
-        project: ny-demo-lgbm-model
+        project: ny-demo-lgbm-mode-1
         categories: []
       spec:
         command: ''
@@ -140,6 +140,5 @@ spec:
   origin_url: git://github.com/davesh0812/nyc-taxi-demo.git#refs/heads/main
   load_source_on_run: true
   desired_state: online
-  owner: davids
 status:
   state: online
