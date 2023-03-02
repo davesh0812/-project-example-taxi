@@ -3,7 +3,7 @@ from time import sleep
 import mlrun
 
 
-def invoke(sample_cnt=1000, project_name="ny-lgbm-demo-v5"):
+def invoke(sample_cnt=1000, project_name="ny-lgbm-demo-yaronh"):
 
     # Load serving function
     project = mlrun.get_or_create_project(project_name)

@@ -1,6 +1,6 @@
 kind: project
 metadata:
-  name: ny-lgbm-demo-v5
+  name: ny-lgbm-demo-yaronh
   created: '2023-02-16T15:06:21.174000'
 spec:
   functions:
@@ -24,7 +24,7 @@ spec:
       kind: serving
       metadata:
         name: serving
-        project: ny-lgbm-demo-v5
+        project: ny-lgbm-demo-yaronh
         categories: []
       spec:
         command: ''
